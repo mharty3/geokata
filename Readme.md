@@ -45,6 +45,21 @@ Process geological property and land ownership maps to identify prospect locatio
 ![](img/property_maps.png)
 ![](img/prospect_blobs.png)
 
+### [4. Birthquakes](kata/04_Birthquakes.ipynb)
+Perform data analysis on earthquake locations.
+
+* Use [`io.StringIO()`](https://docs.python.org/3/library/io.html) to create a file-like object from a string, called a string buffer or memory file, that can be passed to functions like `pd.read_csv()` as if it was a file. 
+    ```python
+    from io import StringIO
+    output = StringIO(source)
+    quakes = pd.read_csv(output, sep='|', parse_dates=['Time'])
+    ```
+* Compute great circle distances between latitude and longitude points using the haversine formula.
+* [`scipy.spatial.distance.cdist`](https://docs.scipy.org/doc/scipy/reference/generated/scipy.spatial.distance.cdist.html) to create a distance matrix between two arrays of points. Scipy has several built in distance metrics to chose from, but you can also pass in your own, as I did here with the haversine formula. 
+    ```python
+    dist_matrix = cdist(coords, coords, lambda u, v: haversine(u, v))
+    ```
+* [np.tril](https://numpy.org/doc/stable/reference/generated/numpy.tril.html) get the lower triangle of an array. The distance matrix returned by `cdist` includes two entries for each pair of points, one in each diagonal. I used `np.tril` to only select the values in the lower triangle so I would only get one value per pair.
 
 
 
