@@ -61,6 +61,31 @@ Perform data analysis on earthquake locations.
     ```
 * [np.tril](https://numpy.org/doc/stable/reference/generated/numpy.tril.html) get the lower triangle of an array. The distance matrix returned by `cdist` includes two entries for each pair of points, one in each diagonal. I used `np.tril` to only select the values in the lower triangle so I would only get one value per pair.
 
+### [5. Fossil Hunting](kata/05_Fossils.ipynb)
+This was a fun one. Perform biostratigraphic analysis on samples of "fossil observations" recorded as emojis.
 
+    {283.3: {'🐚', '🐟', '🐠', '🦄', '🦐', '🦠'},
+    324.7: {'🌿', '🐚', '🐟', '🐠', '🦄', '🦐'},
+    334.0: {'🌿', '🐚', '🐟', '🐠', '🦄', '🦐'},
+    
 
-        
+* Finding emojis in regex. Emojis can be matched by referring to the blocks of unicode character numbers containing emojis. 
+
+    ```python
+    EMOJI_PATTERN = ("[" # https://en.wikipedia.org/wiki/Unicode_block
+        "\U0001F1E0-\U0001F1FF"  # flags (iOS)
+        "\U0001F300-\U0001F5FF"  # symbols & pictographs
+        "\U0001F600-\U0001F64F"  # emoticons
+        "\U0001F680-\U0001F6FF"  # transport & map symbols
+        "\U0001F700-\U0001F77F"  # alchemical symbols
+        "\U0001F780-\U0001F7FF"  # Geometric Shapes Extended
+        "\U0001F800-\U0001F8FF"  # Supplemental Arrows-C
+        "\U0001F900-\U0001F9FF"  # Supplemental Symbols and Pictographs
+        "\U0001FA00-\U0001FA6F"  # Chess Symbols
+        "\U0001FA70-\U0001FAFF"  # Symbols and Pictographs Extended-A
+        "\U00002702-\U000027B0"  # Dingbats
+        "\U000024C2-\U0001F251" 
+        "]")
+    ```
+
+* Using regex groups. Putting part of a regex pattern in parentheses will define those parts of the patterns as groups that can be accessed using the `groups` method of the `re` `match` object. For `re.findall()` which I used for this kata, it will return a list of the matches with tuples containing the results of the matches of the groups.  
